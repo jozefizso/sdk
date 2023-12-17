@@ -154,10 +154,17 @@ Copyright (c) .NET Foundation. All rights reserved.
       <AppHostRuntimeIdentifier Condition="'$(AppHostRuntimeIdentifier)' == ''">$(DefaultAppHostRuntimeIdentifier)</AppHostRuntimeIdentifier>
     </PropertyGroup>
 
+    <PropertyGroup Condition="'$(ComHostRuntimeIdentifiers)' == '' And
+                              ('$(UseAppHost)' == 'true' Or '$(EnableComHosting)' == 'true' Or '$(UseIJWHost)' == 'true')">
+      <ComHostRuntimeIdentifiers>$(RuntimeIdentifiers)</ComHostRuntimeIdentifiers>
+      <ComHostRuntimeIdentifiers Condition="'$(ComHostRuntimeIdentifiers)' == ''">$(DefaultComHostRuntimeIdentifiers)</ComHostRuntimeIdentifiers>
+    </PropertyGroup>
+
     <ResolveAppHosts TargetFrameworkIdentifier="$(TargetFrameworkIdentifier)"
                      TargetFrameworkVersion="$(_TargetFrameworkVersionWithoutV)"
                      TargetingPackRoot="$(NetCoreTargetingPackRoot)"
                      AppHostRuntimeIdentifier="$(AppHostRuntimeIdentifier)"
+                     ComHostRuntimeIdentifiers="$(ComHostRuntimeIdentifiers)"
                      OtherRuntimeIdentifiers="$(RuntimeIdentifiers)"
                      RuntimeFrameworkVersion="$(RuntimeFrameworkVersion)"
                      PackAsToolShimRuntimeIdentifiers="@(_PackAsToolShimRuntimeIdentifiers)"

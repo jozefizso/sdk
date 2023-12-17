@@ -17,6 +17,8 @@ namespace Microsoft.NET.Build.Tasks
 
         public string AppHostRuntimeIdentifier { get; set; }
 
+        public string[] ComHostRuntimeIdentifiers { get; set; }
+
         public string[] OtherRuntimeIdentifiers { get; set; }
 
         public string RuntimeFrameworkVersion { get; set; }
@@ -131,20 +133,6 @@ namespace Microsoft.NET.Build.Tasks
                     SingleFileHost = new ITaskItem[] { singlefileHostItem };
                 }
 
-                var comHostItem = GetHostItem(
-                    AppHostRuntimeIdentifier,
-                    knownAppHostPacksForTargetFramework,
-                    packagesToDownload,
-                    DotNetComHostLibraryNameWithoutExtension,
-                    "ComHost",
-                    isExecutable: false,
-                    errorIfNotFound: true);
-
-                if (comHostItem != null)
-                {
-                    ComHost = new ITaskItem[] { comHostItem };
-                }
-
                 var ijwHostItem = GetHostItem(
                     AppHostRuntimeIdentifier,
                     knownAppHostPacksForTargetFramework,
@@ -180,6 +168,29 @@ namespace Microsoft.NET.Build.Tasks
                     }
                 }
                 PackAsToolShimAppHostPacks = packAsToolShimAppHostPacks.ToArray();
+            }
+
+            if (ComHostRuntimeIdentifiers != null)
+            {
+                var comHostItems = new List<ITaskItem>();
+                foreach (var runtimeIdentifier in ComHostRuntimeIdentifiers)
+                {
+                    var comHostItem = GetHostItem(
+                        runtimeIdentifier,
+                        knownAppHostPacksForTargetFramework,
+                        packagesToDownload,
+                        DotNetComHostLibraryNameWithoutExtension,
+                        "ComHost",
+                        isExecutable: false,
+                        errorIfNotFound: true);
+
+                    if (comHostItem != null)
+                    {
+                        comHostItems.Add(comHostItem);
+                    }
+                }
+
+                ComHost = comHostItems.ToArray();
             }
 
             if (OtherRuntimeIdentifiers != null)

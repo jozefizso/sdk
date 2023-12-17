@@ -204,6 +204,14 @@ Copyright (c) .NET Foundation. All rights reserved.
                                   $([MSBuild]::VersionLessThan('$(_TargetFrameworkVersionWithoutV)', '5.0'))">$(DefaultAppHostRuntimeIdentifier.Replace("arm64", "x64"))</DefaultAppHostRuntimeIdentifier>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(DefaultComHostRuntimeIdentifier)' == '' and
+                            '$(RuntimeIdentifier)' == '' and
+                            (('$(UseAppHost)' == 'true' and '$(ProjectDepsFilePath)' == '') or
+                            ('$(EnableComHosting)' == 'true' and '$(_IsExecutable)' != 'true') or
+                            '$(UseIJWHost)' == 'true')">
+    <DefaultComHostRuntimeIdentifier>$(DefaultAppHostRuntimeIdentifier)</DefaultComHostRuntimeIdentifier>
+  </PropertyGroup>
+
   <Target Name="_CheckForUnsupportedAppHostUsage"
           BeforeTargets="_CheckForInvalidConfigurationAndPlatform"
           Condition="'$(TargetFrameworkIdentifier)' == '.NETCoreApp' and '$(HasRuntimeOutput)' == 'true'">
