@@ -111,12 +111,13 @@ namespace Microsoft.NET.TestFramework.Assertions
             var missingFiles = Enumerable.Except(expectedFiles, actualFiles);
             var extraFiles = Enumerable.Except(actualFiles, expectedFiles);
             var nl = Environment.NewLine;
+            var nl2 = Environment.NewLine + " ";
 
             Execute.Assertion.ForCondition(!missingFiles.Any())
-                .FailWith($"Following files cannot be found inside directory {_dirInfo.FullName} {nl} {string.Join(nl, missingFiles)}");
+                .FailWith($"Following files cannot be found inside directory {_dirInfo.FullName} {nl2}{string.Join(nl2, missingFiles)}");
 
             Execute.Assertion.ForCondition(!extraFiles.Any())
-                .FailWith($"Following extra files are found inside directory {_dirInfo.FullName} {nl} {string.Join(nl, extraFiles)}");
+                .FailWith($"Following extra files are found inside directory {_dirInfo.FullName} {nl2}{string.Join(nl2, extraFiles)}");
 
             return new AndConstraint<DirectoryInfoAssertions>(this);
         }
