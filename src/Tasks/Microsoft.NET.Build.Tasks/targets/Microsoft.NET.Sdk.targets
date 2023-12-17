@@ -858,7 +858,9 @@ Copyright (c) .NET Foundation. All rights reserved.
         <ComHostIntermediatePath>$(IntermediateOutputPath)$(AssemblyName).comhost.%(RuntimeIdentifier)$(_ComHostLibraryExtension)</ComHostIntermediatePath>
       </ComHostSourcePath>
 
-      <ComHostIntermediatePath Include="%(ComHostSourcePath.ComHostIntermediatePath)" />
+      <ComHostIntermediatePath Include="%(ComHostSourcePath.ComHostIntermediatePath)">
+        <ComHostFileName>%(ComHostSourcePath.ComHostFileName)</ComHostFileName>
+      </ComHostIntermediatePath>
     </ItemGroup>
 
     <NETSdkError Condition="'@(ComHostSourcePath)' == '' or !Exists('@(ComHostSourcePath)')"
@@ -931,9 +933,9 @@ Copyright (c) .NET Foundation. All rights reserved.
       </None>
     </ItemGroup>
 
-    <ItemGroup Condition="'$(ComHostIntermediatePath)' != ''">
-      <None Include="$(ComHostIntermediatePath)">
-        <Link>$(AssemblyName).$(_DotNetComHostLibraryName)</Link>
+    <ItemGroup Condition="'@(ComHostIntermediatePath)' != ''">
+      <None Include="@(ComHostIntermediatePath)">
+        <Link>%(ComHostIntermediatePath.ComHostFileName)</Link>
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       </None>
