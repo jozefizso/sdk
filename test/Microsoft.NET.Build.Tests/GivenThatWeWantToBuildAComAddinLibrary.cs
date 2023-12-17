@@ -30,7 +30,9 @@ namespace Microsoft.NET.Build.Tests
                 "ComAddin.dll",
                 "ComAddin.pdb",
                 "ComAddin.deps.json",
-                "ComAddin.comhost.dll",
+                "ComAddin.comhost.win-x86.dll",
+                "ComAddin.comhost.win-x64.dll",
+                "ComAddin.comhost.win-arm64.dll",
                 "ComAddin.runtimeconfig.json"
             });
 

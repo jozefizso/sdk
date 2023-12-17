@@ -5,5 +5,6 @@
     <TargetFramework>$(CurrentTargetFramework)</TargetFramework>
     <EnableComHosting>true</EnableComHosting>
     <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
+    <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
   </PropertyGroup>
 </Project>
