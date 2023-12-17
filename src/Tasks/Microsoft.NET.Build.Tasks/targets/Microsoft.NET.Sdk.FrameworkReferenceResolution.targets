@@ -359,9 +359,9 @@ Copyright (c) .NET Foundation. All rights reserved.
       </ResolvedComHostPack>
     </ItemGroup>
 
-    <PropertyGroup Condition="'@(ResolvedComHostPack)' != '' And '$(ComHostSourcePath)' == ''">
-      <ComHostSourcePath>@(ResolvedComHostPack->'%(Path)')</ComHostSourcePath>
-    </PropertyGroup>
+    <ItemGroup Condition="'@(ResolvedComHostPack)' != '' And '$(ComHostSourcePath)' == ''">
+      <ComHostSourcePath Include="@(ResolvedComHostPack->'%(Path)')" KeepMetadata="NuGetPackageId;NuGetPackageVersion;RuntimeIdentifier" />
+    </ItemGroup>
 
     <ItemGroup>
       <ResolvedIjwHostPack Condition="'%(ResolvedIjwHostPack.Path)' == '' and '%(ResolvedIjwHostPack.PackageDirectory)' != ''">
